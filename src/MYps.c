@@ -18,14 +18,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 #include <dirent.h>
 #include <sys/types.h>
-#include <string.h>
 
 int main( int argc, char **argv)
 {
+    //get this process PID
     int pid = getpid();
-    char *pidString = sprintf(pidString, "%d", pid);
-    char *cmdlnPath = "/proc/";
+    char *pidString = malloc(5*sizeof(char));
+    sprintf(pidString, "%d", pid);
+
+    //create path to this process cmdline file
+    char *cmdlnPath = malloc(50*sizeof(char));
+    cmdlnPath = strcat(cmdlnPath, "/proc/");
     cmdlnPath = strcat(cmdlnPath, pidString);
+    cmdlnPath = strcat(cmdlnPath, "/cmdline");
+
+    printf("Full cmdline path: %s\n\n", cmdlnPath);
+
+    FILE *thisCmdlineFile = fopen(cmdlnPath, "r");
+
+    char *line = malloc(128*sizeof(char));
+    size_t len = 0;
+    ssize_t read;
+    while((read = getline(&line, &len, thisCmdlineFile)) != -1)
+    {
+        printf("%s\n", line);
+    }
+    /*int i = 1; //number of cammand line args
+    while((ent = ))
+    {
+        printf("entry %d: %s\n", i, ent);
+    }*/
 }

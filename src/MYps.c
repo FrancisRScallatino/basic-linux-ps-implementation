@@ -29,7 +29,7 @@ int main( int argc, char **argv)
     char *pidString = malloc(5*sizeof(char));
     sprintf(pidString, "%d", pid);
 
-    //create path to this process cmdline file
+    //create path to this process' cmdline file
     char *cmdlnPath = malloc(50*sizeof(char));
     cmdlnPath = strcat(cmdlnPath, "/proc/");
     cmdlnPath = strcat(cmdlnPath, pidString);
@@ -37,18 +37,24 @@ int main( int argc, char **argv)
 
     printf("Full cmdline path: %s\n\n", cmdlnPath);
 
+    //fill an array of strings with args from the cmdline file
     FILE *thisCmdlineFile = fopen(cmdlnPath, "r");
-
-    char *line = malloc(128*sizeof(char));
-    size_t len = 0;
-    ssize_t read;
-    while((read = getline(&line, &len, thisCmdlineFile)) != -1)
-    {
-        printf("%s\n", line);
+    int argLen = 32;                                            //max pos arg len
+    char (*entry)[argLen] = malloc(sizeof(char[argc][argLen])); //allocated memory for cmd arguments
+    char cEntry = getc(thisCmdlineFile);                        //next char in cmdline file
+    int entryI=0;                                               //counter for cmdline file args
+    while(cEntry != EOF){
+        if(strcmp(&cEntry, "\0") != 0){
+            //do something when it's not a null pointer
+            strcat(entry[entryI], &cEntry);
+        }else{
+            //do something when it is a null pointer
+            entryI++;
+        }
+        cEntry = getc(thisCmdlineFile);
     }
-    /*int i = 1; //number of cammand line args
-    while((ent = ))
-    {
-        printf("entry %d: %s\n", i, ent);
-    }*/
+
+    for(int i=0; i<argc; i++){
+        printf("Arg%d: %s\n", i, entry[i]);
+    }
 }

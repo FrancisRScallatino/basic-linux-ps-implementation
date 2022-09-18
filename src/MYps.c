@@ -17,44 +17,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
+#include <getopt.h>
+
+#include "../hedr/OptProc.h"
 
 int main( int argc, char **argv)
 {
     //get this process PID
-    int pid = getpid();
-    char *pidString = malloc(5*sizeof(char));
-    sprintf(pidString, "%d", pid);
-
-    //create path to this process' cmdline file
-    char *cmdlnPath = malloc(50*sizeof(char));
-    cmdlnPath = strcat(cmdlnPath, "/proc/");
-    cmdlnPath = strcat(cmdlnPath, pidString);
-    cmdlnPath = strcat(cmdlnPath, "/cmdline");
-
-    printf("Full cmdline path: %s\n\n", cmdlnPath);
-
-    //fill an array of strings with args from the cmdline file
-    FILE *thisCmdlineFile = fopen(cmdlnPath, "r");
-    int argLen = 32;                                            //max pos arg len
-    char (*entry)[argLen] = malloc(sizeof(char[argc][argLen])); //allocated memory for cmd arguments
-    char cEntry = getc(thisCmdlineFile);                        //next char in cmdline file
-    int entryI=0;                                               //counter for cmdline file args
-    while(cEntry != EOF){
-        if(strcmp(&cEntry, "\0") != 0){
-            //do something when it's not a null pointer
-            strcat(entry[entryI], &cEntry);
-        }else{
-            //do something when it is a null pointer
-            entryI++;
-        }
-        cEntry = getc(thisCmdlineFile);
-    }
-
-    for(int i=0; i<argc; i++){
-        printf("Arg%d: %s\n", i, entry[i]);
-    }
+    //const char *thisProcPath = "/proc/self/";
+    /*int option;
+    while((option = getopt(argc, argv, "psUSvc")) != -1){
+        printf("option: %c\n", option);
+    }*/
+    
+    OptProc flags = Optproc_value(argc, argv);
+    OptProc_Print(&flags);
 }

@@ -4,6 +4,13 @@
 typedef struct OptProc {
     int argc;
     char **argv;
+    int num_of_options;
+    int has_p;
+    int has_s;
+    int has_U;
+    int has_S;
+    int has_v;
+    int has_c;
 }OptProc;
 
 /**

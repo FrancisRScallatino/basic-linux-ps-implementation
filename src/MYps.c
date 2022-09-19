@@ -25,10 +25,6 @@ int main( int argc, char **argv)
 {
     //get this process PID
     //const char *thisProcPath = "/proc/self/";
-    /*int option;
-    while((option = getopt(argc, argv, "psUSvc")) != -1){
-        printf("option: %c\n", option);
-    }*/
     
     OptProc flags = Optproc_value(argc, argv);
     OptProc_Print(&flags);

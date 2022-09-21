@@ -1,10 +1,16 @@
+/**author: Francis R. Scallatino
+ * 
+ * this module helps with keeping track of which command line
+ * arguments are being used.
+ */
+
 #ifndef OPTPROC_H
 #define OPTPROC_H
 
 typedef struct OptProc {
     int argc;
     char **argv;
-    int num_of_options;
+    //int num_of_options;
     int has_p;
     int has_s;
     int has_U;
@@ -14,7 +20,7 @@ typedef struct OptProc {
 }OptProc;
 
 /**
- * initialize option processing struct value
+ * initialize option processing struct Optproc_value
  */
 OptProc Optproc_value (int argc, char **argv);
 

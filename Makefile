@@ -1,17 +1,15 @@
 GC = gcc
 WFLAGS = -Wall -Werror
 
-all: MYps
-
-MYps.o: src/MYps.c
-	$(GC) $(WFLAGS) -c src/MYps.c
+MYps: src/OptProc.o src/GetProcList.o
+	$(GC) $(WFLAGS) src/OptProc.o src/GetProcList.o -o MYps src/MYps.c
 
 OptProc.o: src/OptProc.c hedr/OptProc.h
 	$(GC) $(WFLAGS) -c src/OptProc.c
 
-MYps: src/MYps.o src/OptProc.o
-	$(GC) $(WFLAGS) src/MYps.o src/OptProc.o -o MYps
-	
+GetProcList.o: src/GetProcList.c hedr/GetProcList.h
+	$(GC) $(WFLAGS) -c src/GetProcList.c	
+
 clean:
 	rm -rf *.o ./*/*.o MYps MYpsDB
 

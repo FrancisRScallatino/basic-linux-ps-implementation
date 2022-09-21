@@ -1,4 +1,6 @@
-/** This module will process the command line options,
+/**author: Francis R. Scallatino
+ * 
+ * This module will process the command line options,
  * setting state variables to record what the options specify.
  */
 #include <stdio.h>
@@ -46,7 +48,7 @@ OptProc Optproc_value (int argc, char **argv)
                 init.has_c++;
                 break;
             default:
-                printf("Please only use valid flags (i.e. psUSvc)");
+                printf("Please only use valid flags (i.e. %s)\n", options);
                 exit(EXIT_FAILURE);
         }
         opt = getopt(argc, argv, options);

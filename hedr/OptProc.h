@@ -10,7 +10,7 @@
 typedef struct OptProc {
     int argc;
     char **argv;
-    //int num_of_options;
+    char **processes;
     int has_p;
     int has_s;
     int has_U;
@@ -22,7 +22,7 @@ typedef struct OptProc {
 /**
  * initialize option processing struct Optproc_value
  */
-OptProc Optproc_value (int argc, char **argv);
+OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs);
 
 /**
  * print argument count and arguments from comand line

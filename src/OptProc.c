@@ -9,9 +9,12 @@
 
 #include "../hedr/OptProc.h"
 
-OptProc Optproc_value (int argc, char **argv)
+OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs)
 {
     OptProc init = {argc, argv};
+
+    init.processes = malloc(sizeof(char[maxPIDs][maxPIDLen]));
+
     init.has_p = 0;
     init.has_s = 0;
     init.has_U = 0;

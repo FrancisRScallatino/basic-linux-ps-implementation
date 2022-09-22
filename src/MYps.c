@@ -31,8 +31,14 @@ int main( int argc, char **argv)
 {
     //get this process PID
     //const char *thisProcPath = "/proc/self/";
+    int numOfProcesses = 30;
+    int maxLenOfPID = 6;
     
-    OptProc flags = Optproc_value(argc, argv);
-    OptProc_Print(&flags);
-    printUserProcesses();
+    OptProc optProc = Optproc_value(argc, argv, numOfProcesses, maxLenOfPID);
+    OptProc_Print(&optProc);
+    printProcessInfo();
+
+    findProcesses(optProc);
+
+    free(optProc.processes);
 }

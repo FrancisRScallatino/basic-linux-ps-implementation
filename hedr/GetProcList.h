@@ -6,9 +6,10 @@
 #define GETPROCLIST_H
 
 //function to find processes
+void findProcesses(OptProc optProc);
 
 //function to print process list
-void printUserProcesses();
+void printProcessInfo();
 
 //function to get process info from stat file
 

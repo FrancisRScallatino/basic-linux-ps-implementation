@@ -18,14 +18,10 @@ void findProcesses(OptProc optProc){
     {
         if(strcmp(regex, dirProcEntry -> d_name) > 0){
             if(i>1){
-                printf("i = %d\n", i);
-                int j;
-                for(j = 0; j < dirProcEntry -> d_reclen; j++){
-                    optProc.processes[i-2][j] = dirProcEntry -> d_name[j];
-                }
-                optProc.processes[i-2][++j] = '\0';
+                strcpy(optProc.processes[i-2], dirProcEntry -> d_name);
+                printf("found process: %s\n", optProc.processes[i-2]);
             }
-            printf("found process: %s\n", optProc.processes[i++]);
+            i++;
         }
         dirProcEntry = readdir(dirProc);
     }

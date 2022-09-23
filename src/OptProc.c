@@ -11,9 +11,16 @@
 
 OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs)
 {
+    printf("ENTERING OptProc!!!!\n");
     OptProc init = {argc, argv};
 
-    init.processes = malloc(sizeof(char[maxPIDs][maxPIDLen]));
+    //allocate char matrix to hold list of PIDs
+    init.processes = malloc(sizeof(char*) * maxPIDs);
+    for (int i=0; i<maxPIDs; i++) init.processes[i] = malloc(sizeof(char) * maxPIDLen);
+
+    /*printf("is optProc.processes initialized?\n");
+    printf("%d\n", init.processes[0][1]);
+    printf("YES\n");*/
 
     init.has_p = 0;
     init.has_s = 0;

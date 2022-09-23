@@ -2,8 +2,11 @@ VPATH = src hedr
 GC = gcc
 WFLAGS = -Wall -Werror
 
-MYps: src/OptProc.o src/GetProcList.o
-	$(GC) $(WFLAGS) src/OptProc.o src/GetProcList.o -o MYps src/MYps.c
+MYps: src/OptProc.o src/GetProcList.o src/MYps.o
+	$(GC) $(WFLAGS) src/OptProc.o src/GetProcList.o src/MYps.o -o MYps
+
+MYps.o: MYps.c
+	$(GC) $(WFLAGS) -c MYps.c
 
 OptProc.o: OptProc.c OptProc.h
 	$(GC) $(WFLAGS) -c OptProc.c

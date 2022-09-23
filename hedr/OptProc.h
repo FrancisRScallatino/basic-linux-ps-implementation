@@ -8,9 +8,13 @@
 #define OPTPROC_H
 
 typedef struct OptProc {
-    int argc;
-    char **argv;
-    char **processes;
+    int argc;           //number of arguments used in cammand line
+    char **argv;        //the arguments used in the command line
+    char **processes;   //matrix to keep track of list of processes in /proc/
+    int maxPIDs;        //size of space to allocate for processes taken from /proc/
+    int maxPIDLen;      //size of space to allocate for the length of each PID taken from /proc/
+    
+    //tracking all options this program will support
     int has_p;
     int has_s;
     int has_U;
@@ -20,7 +24,7 @@ typedef struct OptProc {
 }OptProc;
 
 /**
- * initialize option processing struct Optproc_value
+ * initialize option processing struct OptProc
  */
 OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs);
 

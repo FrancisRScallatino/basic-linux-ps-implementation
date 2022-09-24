@@ -14,7 +14,7 @@ typedef struct OptProc {
     int maxPIDs;        //size of space to allocate for processes taken from /proc/
     int maxPIDLen;      //size of space to allocate for the length of each PID taken from /proc/
     
-    //tracking all options this program will support
+    //used for tracking all options this program will support
     int has_p;
     int has_s;
     int has_U;

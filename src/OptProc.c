@@ -11,7 +11,6 @@
 
 OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs)
 {
-    printf("ENTERING OptProc!!!!\n");
     OptProc init = {argc, argv};
 
     init.maxPIDs = maxPIDs;
@@ -21,10 +20,6 @@ OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs)
     init.processes = malloc(sizeof(char*) * maxPIDs);
     for (int i=0; i<maxPIDs; i++) init.processes[i] = malloc(sizeof(char) * maxPIDLen);
 
-    /*printf("is optProc.processes initialized?\n");
-    printf("%d\n", init.processes[0][1]);
-    printf("YES\n");*/
-
     init.has_p = 0;
     init.has_s = 0;
     init.has_U = 0;
@@ -32,39 +27,33 @@ OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs)
     init.has_v = 0;
     init.has_c = 0;
 
+    //search for and record what options are being used
     const char *options = "psUSvc";
-    char opt = getopt(argc, argv, options);
-    while(opt != -1){
+    char opt;
+    while((opt = getopt(argc, argv, options)) != -1){
         switch(opt){
             case 'p':
-                printf("has -p\n");
                 init.has_p++;
                 break;
             case 's':
-                printf("has -s\n");
                 init.has_s++;
                 break;
             case 'U':
-                printf("has -U\n");
                 init.has_U++;
                 break;
             case 'S':
-                printf("has -S\n");
                 init.has_S++;
                 break;
             case 'v':
-                printf("has -v\n");
                 init.has_v++;
                 break;
             case 'c':
-                printf("has -c\n");
                 init.has_c++;
                 break;
             default:
                 printf("Please only use valid flags (i.e. %s)\n", options);
                 exit(EXIT_FAILURE);
         }
-        opt = getopt(argc, argv, options);
     }
     return init;
 }

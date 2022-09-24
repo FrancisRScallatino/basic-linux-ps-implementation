@@ -5,12 +5,14 @@
 #ifndef GETPROCLIST_H
 #define GETPROCLIST_H
 
-//function to find processes
+/** 
+ * function to find processes
+ * used a built in regex to search fo processes
+ * then saves them in a matrix inside optProc
+ */
 void findProcesses(OptProc optProc);
 
-//function to print process list
-void printProcessInfo();
-
-//function to get process info from stat file
+//function to print process list with help from the StatPares.c
+void printProcessInfo(OptProc optProc);
 
 #endif

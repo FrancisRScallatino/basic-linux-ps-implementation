@@ -8,6 +8,7 @@
 #include <regex.h>
 
 #include "../hedr/OptProc.h"
+#include "../hedr/StatParse.h"
 
 void findProcesses(OptProc optProc){
     regex_t regex;
@@ -46,6 +47,7 @@ void findProcesses(OptProc optProc){
     }
 }
 
-void printProcessInfo(){
+void printProcessInfo(OptProc optProc){
     printf("Printing processes!\n\n");
+    statInfo();
 }

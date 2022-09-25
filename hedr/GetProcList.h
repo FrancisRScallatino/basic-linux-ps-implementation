@@ -10,9 +10,9 @@
  * used a built in regex to search fo processes
  * then saves them in a matrix inside optProc
  */
-void findProcesses(OptProc optProc);
+void findProcesses(OptProc *optProc);
 
-//function to print process list with help from the StatPares.c
-void printProcessInfo(OptProc optProc);
+//function to print process list with help from the StatParse.c
+void printProcessInfo(OptProc *optProc);
 
 #endif

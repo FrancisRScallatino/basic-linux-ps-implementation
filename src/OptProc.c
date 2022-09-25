@@ -18,8 +18,12 @@ OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs)
 
     //allocate char matrix to hold list of PIDs
     init.processes = malloc(sizeof(char*) * maxPIDs);
-    for (int i=0; i<maxPIDs; i++) init.processes[i] = malloc(sizeof(char) * maxPIDLen);
+    for (int i=0; i < maxPIDs; i++) init.processes[i] = malloc(sizeof(char) * maxPIDLen);
 
+    //allocate int array to keep track of user owned processes
+    init.userOwned = malloc(sizeof(int) * maxPIDs);
+
+    init.actualPIDs = 0;
     init.has_p = 0;
     init.has_s = 0;
     init.has_U = 0;

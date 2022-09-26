@@ -9,7 +9,7 @@ FILE* getFile(char *pPath, char *fileName)
     strcpy(sPath, pPath);
     strcat(sPath, fileName);
 
-    printf("stat path: %s\n", sPath);
+    //printf("stat path: %s\n", sPath);
     
     FILE *stat = fopen(sPath, "r");
     if(stat == NULL){
@@ -18,6 +18,10 @@ FILE* getFile(char *pPath, char *fileName)
         perror(errFrom);
         exit(EXIT_FAILURE);
     }
+
+    free(sPath);
+
+    return stat;
 }
 
 char* GetUTime(char *pPath)
@@ -31,13 +35,24 @@ char* GetUTime(char *pPath)
         perror("getline");
         exit(EXIT_FAILURE);
     }
+    fclose(stat);
+    
+    char *null = NULL;
+    char *token = strtok_r(x, " ", &null);
+    //printf("\ntoken[0] = %s", token);
+
+    //runs loop until it reaches the utime field (field #14)
+    for(int i=0; i<13; i++){
+        token = strtok_r(NULL, " ", &null);
+        //printf("\ntoken[%d] = %s", i+1, token);
+    }
     
     /*if((fgetsReturn = fgets(x, n, stat)) == NULL){
         perror("fgets");
         exit(EXIT_FAILURE);
     }*/
 
-    printf("\nValue at x[1] = %s\n", x);
+    //printf("\nValue at x[1] = %s\n", x);
     
-    return x;
+    return token;
 }

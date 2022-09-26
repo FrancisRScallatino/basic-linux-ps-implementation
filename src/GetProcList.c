@@ -65,39 +65,58 @@ void findProcesses(OptProc *optProc){
  * 
  * if has_c: DO NOT display command line that started this process
  */
-void printProcessInfo(OptProc *optProc){
+void printProcessInfo(OptProc *optProc)
+{
     printf("Printing processes!\n\n");
     char *strbuff = malloc(7*sizeof(char));
     
     //find proc info for 1 process
-    if(optProc -> has_p){
-        //search cmdline args for the PID
-        for(int i = 0; i < optProc -> argc; i++){
-            if(strcmp(optProc -> argv[i], "-p") == 0){
-                int procFound = 0;
-                //compare PID to all tracked processes
-                char *pArg = malloc(sizeof(char) * (strlen(optProc -> argv[i+1])+3));   //used as substring for comparison
-                strcpy(pArg, "/");
-                strcat(pArg, optProc -> argv[i+1]);
-                strcat(pArg, "/");
-                //printf("optProc -> argv[%d] = %s\npArg = %s\n", i+1, optProc -> argv[i+1], pArg);
-                
-                for(int j = 0; j < optProc -> actualPIDs; j++){
-                    //printf("\noptProc.processes[%d] = %s\noptProc.argv[%d] = %s\n",j, optProc -> processes[j], i+1, optProc -> argv[i+1]);
-                    //if(optProc -> userOwned[j]) printf("USER OWNED\n");
-                    if(strstr(optProc -> processes[j], pArg) != NULL){
-                        //printf("FOUND PROCESS!\n");
-                        procFound++;
-                        break;
-                    }
-                }
-
-                if(!procFound){
-                    printf("process %s not found!\n", optProc -> argv[i+1]);
-                    exit(EXIT_FAILURE);
-                }
+    if(optProc -> has_p)
+    {
+        //using (optProc -> argc)-1 as index because of getopt() usage in OptProc.c
+        //note: getopt() pushes "non options" to the back of argv
+        char *pArg = malloc(sizeof(char) * (strlen(optProc -> argv[(optProc -> argc)-1])+3));   //used as substring for comparison
+        strcpy(pArg, "/");
+        strcat(pArg, optProc -> argv[(optProc -> argc)-1]);
+        strcat(pArg, "/");
+        printf("optProc -> argv[%d] = %s\npArg = %s\n", (optProc -> argc)-1, optProc -> argv[(optProc -> argc)-1], pArg);
+        
+        //compare PID to all tracked processes
+        int procFound = 0;
+        for(int j = 0; j < optProc -> actualPIDs; j++){
+            //printf("\noptProc.processes[%d] = %s\noptProc.argv[%d] = %s\n",j, optProc -> processes[j], i+1, optProc -> argv[i+1]);
+            //if(optProc -> userOwned[j]) printf("USER OWNED\n");
+            if(strstr(optProc -> processes[j], pArg) != NULL){
+                //printf("FOUND PROCESS!\n");
+                strcpy(pArg, optProc -> processes[j]);
+                procFound++;
+                break;
             }
         }
+
+        if(!procFound){
+            printf("process %s not found!\n", optProc -> argv[(optProc -> argc)-1]);
+            exit(EXIT_FAILURE);
+        }
+
+        printf("%3s", "PID");
+
+        //design columns
+        if(!(optProc -> has_U)) printf("%10s", "utime");
+        if(!(optProc -> has_c)) printf("%10s", "CMD");
+        if(optProc -> has_s) printf("%10s", "state");
+        if(optProc -> has_S) printf("%10s", "stime");
+        if(optProc -> has_v) printf("%10s", "size");
+        printf("\n");
+
+        //print process info
+        printf("%3s", optProc -> argv[optProc -> argc - 1]);
+        if(!(optProc -> has_U)) printf("%10s", GetUTime(pArg));
+        if(!(optProc -> has_c)) printf("%10s", "CMD");
+        if(optProc -> has_s) printf("%10s", "state");
+        if(optProc -> has_S) printf("%10s", "stime");
+        if(optProc -> has_v) printf("%10s", "size");
+        printf("\n");
     }else{
 
     }

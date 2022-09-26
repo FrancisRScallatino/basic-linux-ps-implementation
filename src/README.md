@@ -9,6 +9,8 @@
 ## what I did
 * 
 ## bugs
+* was pulling wrong value from argv in GetProcList.c for comparisons to find if the user given process exists
+    * fix: got some help from the TAs, found that getopt() pushes "non options" to the back of the argv matrix. since I use this earlier in the program I simply use the last index value to pull the user given PID
 
 ### notes
 #### questions

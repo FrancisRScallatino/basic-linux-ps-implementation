@@ -76,23 +76,24 @@ void printProcessInfo(OptProc *optProc){
             if(strcmp(optProc -> argv[i], "-p") == 0){
                 int procFound = 0;
                 //compare PID to all tracked processes
-                char *pArg = malloc(sizeof(char) * (strlen(optProc -> argv[i+1])+1));               //used as substring for comparison
-                strcpy(pArg, optProc -> argv[i+1]);
+                char *pArg = malloc(sizeof(char) * (strlen(optProc -> argv[i+1])+3));   //used as substring for comparison
+                strcpy(pArg, "/");
+                strcat(pArg, optProc -> argv[i+1]);
                 strcat(pArg, "/");
                 //printf("optProc -> argv[%d] = %s\npArg = %s\n", i+1, optProc -> argv[i+1], pArg);
                 
                 for(int j = 0; j < optProc -> actualPIDs; j++){
                     //printf("\noptProc.processes[%d] = %s\noptProc.argv[%d] = %s\n",j, optProc -> processes[j], i+1, optProc -> argv[i+1]);
-                    if(optProc -> userOwned[j]) printf("USER OWNED\n");
+                    //if(optProc -> userOwned[j]) printf("USER OWNED\n");
                     if(strstr(optProc -> processes[j], pArg) != NULL){
                         //printf("FOUND PROCESS!\n");
                         procFound++;
                         break;
                     }
                 }
-                
+
                 if(!procFound){
-                    printf("process %s not found!", optProc -> argv[i+1]);
+                    printf("process %s not found!\n", optProc -> argv[i+1]);
                     exit(EXIT_FAILURE);
                 }
             }

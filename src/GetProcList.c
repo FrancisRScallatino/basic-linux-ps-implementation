@@ -115,7 +115,7 @@ void printProcessInfo(OptProc *optProc)
         //print process info
         printf("%3s", optProc -> argv[optProc -> argc - 1]);
         if(!(optProc -> has_U)) printf("%10s", GetUTime(pArg));
-        if(!(optProc -> has_c)) printf("%10s", "CMD");
+        //if(!(optProc -> has_c)) printf("%10s", getCMDLine(pArg));
         if(optProc -> has_s) printf("%10s", "state");
         if(optProc -> has_S) printf("%10s", "stime");
         if(optProc -> has_v) printf("%10s", "size");

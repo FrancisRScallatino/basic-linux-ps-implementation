@@ -2,40 +2,39 @@
 #include <stdlib.h>
 #include <string.h>
 
-FILE* getFile(char *pPath, char *fileName)
+char* getFileLineString(char *pPath, char *fileName)
 {
-    char *sPath = malloc(sizeof(char) * strlen(pPath) + 5);
+    char *fPath = malloc(sizeof(char) * strlen(pPath) + 5); //used to get specific file path for given process
+    char *x = NULL;                                         //string of information from required file
+    size_t n = 0;                                           //buffer size for getline()
 
-    strcpy(sPath, pPath);
-    strcat(sPath, fileName);
+    //build path to needed file without changing original pPath
+    strcpy(fPath, pPath);
+    strcat(fPath, fileName);
 
-    //printf("stat path: %s\n", sPath);
-    
-    FILE *stat = fopen(sPath, "r");
+    //printf("stat path: %s\n", fPath);
+    FILE *stat = fopen(fPath, "r");
     if(stat == NULL){
         char *errFrom;
         sprintf(errFrom, "%s path", fileName);
         perror(errFrom);
         exit(EXIT_FAILURE);
     }
-
-    free(sPath);
-
-    return stat;
-}
-
-char* GetUTime(char *pPath)
-{
-    char *x = NULL;
-    size_t n = 0;
-
-    FILE* stat = getFile(pPath, "stat");
+    free(fPath);
     
     if(getline(&x, &n, stat) == -1){
         perror("getline");
         exit(EXIT_FAILURE);
     }
     fclose(stat);
+
+    return x;
+}
+
+char* GetUTime(char *pPath)
+{
+
+    char *x = getFileLineString(pPath, "stat");
     
     char *null = NULL;
     char *token = strtok_r(x, " ", &null);
@@ -55,4 +54,11 @@ char* GetUTime(char *pPath)
     //printf("\nValue at x[1] = %s\n", x);
     
     return token;
+}
+
+char* getCMDLine(char *pPath)
+{
+    char *x = getFileLineString(pPath, "cmdline");
+
+    return x;
 }

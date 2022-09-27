@@ -64,7 +64,7 @@ void findProcesses(OptProc *optProc){
  * 
  * if has_v: display above info AND amount of virtual memory in use (location: statm file, "size"(1) field)
  * 
- * if has_c: DO NOT display command line that started this process
+ * if has_c: DO NOT display command that started this process
  */
 void printProcessInfo(OptProc *optProc)
 {
@@ -122,12 +122,11 @@ void printProcessInfo(OptProc *optProc)
         //print process info
         printf("%3s", optProc -> argv[optProc -> argc - 1]);
         if(!(optProc -> has_U)) printf("%10s", GetUTime(pArg));
-        if(!(optProc -> has_c)) printf("%10s", getCMDLine(pArg));
-        if(optProc -> has_s) printf("%10s", getState(pArg));
-        if(optProc -> has_S) printf("%10s", "stime");
-        if(optProc -> has_v) printf("%10s", "size");
+        if(!(optProc -> has_c)) printf("%10s", GetCMDLine(pArg));
+        if(optProc -> has_s) printf("%10s", GetState(pArg));
+        if(optProc -> has_S) printf("%10s", GetSTime(pArg));
+        if(optProc -> has_v) printf("%10s", GetSize(pArg));
         printf("\n");
     }else{
-
     }
 }

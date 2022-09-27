@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char* getFileLineString(char *pPath, char *fileName)
+char* GetFileLineString(char *pPath, char *fileName)
 {
     char *fPath = malloc(sizeof(char) * strlen(pPath) + 5); //used to get specific file path for given process
     char *x = NULL;                                         //string of information from required file
@@ -31,17 +31,14 @@ char* getFileLineString(char *pPath, char *fileName)
     return x;
 }
 
-char* GetUTime(char *pPath)
+char* GetField(int n, char *x)
 {
-
-    char *x = getFileLineString(pPath, "stat");
-    
     char *null = NULL;
     char *token = strtok_r(x, " ", &null);
     //printf("\ntoken[0] = %s", token);
 
     //runs loop until it reaches the utime field (field #14)
-    for(int i=0; i<13; i++){
+    for(int i=0; i<n; i++){
         token = strtok_r(NULL, " ", &null);
         //printf("\ntoken[%d] = %s", i+1, token);
     }
@@ -52,37 +49,41 @@ char* GetUTime(char *pPath)
     }*/
 
     //printf("\nValue at x[1] = %s\n", x);
-    
+
     return token;
 }
 
-char* getCMDLine(char *pPath)
+char* GetUTime(char *pPath)
 {
-    char *x = getFileLineString(pPath, "cmdline");
+    char *x = GetFileLineString(pPath, "stat");
+    
+    return GetField(13, x);
+}
+
+char* GetCMDLine(char *pPath)
+{
+    char *x = GetFileLineString(pPath, "cmdline");
 
     return strtok(x, " ");
 }
 
-char* getState(char *pPath)
+char* GetState(char *pPath)
 {
-    char *x = getFileLineString(pPath, "stat");
+    char *x = GetFileLineString(pPath, "stat");
     
-    char *null = NULL;
-    char *token = strtok_r(x, " ", &null);
-    //printf("\ntoken[0] = %s", token);
+    return GetField(2, x);
+}
 
-    //runs loop until it reaches the utime field (field #14)
-    for(int i=0; i<2; i++){
-        token = strtok_r(NULL, " ", &null);
-        //printf("\ntoken[%d] = %s", i+1, token);
-    }
+char* GetSTime(char *pPath)
+{
+    char *x = GetFileLineString(pPath, "stat");
     
-    /*if((fgetsReturn = fgets(x, n, stat)) == NULL){
-        perror("fgets");
-        exit(EXIT_FAILURE);
-    }*/
+    return GetField(14, x);
+}
 
-    //printf("\nValue at x[1] = %s\n", x);
-    
-    return token;
+char* GetSize(char *pPath)
+{
+    char *x = GetFileLineString(pPath, "statm");
+
+    return strtok(x, " ");
 }

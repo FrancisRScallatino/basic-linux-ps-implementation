@@ -12,7 +12,4 @@
  */
 void findProcesses(OptProc *optProc);
 
-//function to print process list with help from the StatParse.c
-void printProcessInfo(OptProc *optProc);
-
 #endif

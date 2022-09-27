@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <regex.h>
+#include <ctype.h>
 
 #include "../hedr/OptProc.h"
 #include "../hedr/StatParse.h"
@@ -73,6 +74,12 @@ void printProcessInfo(OptProc *optProc)
     //find proc info for 1 process
     if(optProc -> has_p)
     {
+        //if given -p option without a PID to search for
+        if(!isdigit((optProc -> argv[(optProc -> argc)-1][0]))){
+            printf("No PID given with -p option!\n");
+            exit(EXIT_FAILURE);
+        }
+
         //using (optProc -> argc)-1 as index because of getopt() usage in OptProc.c
         //note: getopt() pushes "non options" to the back of argv
         char *pArg = malloc(sizeof(char) * (strlen(optProc -> argv[(optProc -> argc)-1])+3));   //used as substring for comparison
@@ -115,8 +122,8 @@ void printProcessInfo(OptProc *optProc)
         //print process info
         printf("%3s", optProc -> argv[optProc -> argc - 1]);
         if(!(optProc -> has_U)) printf("%10s", GetUTime(pArg));
-        //if(!(optProc -> has_c)) printf("%10s", getCMDLine(pArg));
-        if(optProc -> has_s) printf("%10s", "state");
+        if(!(optProc -> has_c)) printf("%10s", getCMDLine(pArg));
+        if(optProc -> has_s) printf("%10s", getState(pArg));
         if(optProc -> has_S) printf("%10s", "stime");
         if(optProc -> has_v) printf("%10s", "size");
         printf("\n");

@@ -60,5 +60,29 @@ char* getCMDLine(char *pPath)
 {
     char *x = getFileLineString(pPath, "cmdline");
 
-    return x;
+    return strtok(x, " ");
+}
+
+char* getState(char *pPath)
+{
+    char *x = getFileLineString(pPath, "stat");
+    
+    char *null = NULL;
+    char *token = strtok_r(x, " ", &null);
+    //printf("\ntoken[0] = %s", token);
+
+    //runs loop until it reaches the utime field (field #14)
+    for(int i=0; i<2; i++){
+        token = strtok_r(NULL, " ", &null);
+        //printf("\ntoken[%d] = %s", i+1, token);
+    }
+    
+    /*if((fgetsReturn = fgets(x, n, stat)) == NULL){
+        perror("fgets");
+        exit(EXIT_FAILURE);
+    }*/
+
+    //printf("\nValue at x[1] = %s\n", x);
+    
+    return token;
 }

@@ -13,3 +13,6 @@ char* GetUTime(char *pPath);
 
 //returns the calling command from the cmdline file
 char* getCMDLine(char *pPath);
+
+//returns state from the stat file
+char* getState(char *pPath);

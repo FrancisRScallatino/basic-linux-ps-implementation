@@ -109,9 +109,8 @@ void printProcessInfo(OptProc *optProc)
             exit(EXIT_FAILURE);
         }
 
-        printf("%3s", "PID");
-
         //design columns
+        printf("%3s", "PID");
         if(!(optProc -> has_U)) printf("%10s", "utime");
         if(!(optProc -> has_c)) printf("%10s", "CMD");
         if(optProc -> has_s) printf("%10s", "state");
@@ -128,5 +127,28 @@ void printProcessInfo(OptProc *optProc)
         if(optProc -> has_v) printf("%10s", GetSize(pArg));
         printf("\n");
     }else{
+        //design columns
+        printf("%3s", "PID");
+        if(!(optProc -> has_U)) printf("%10s", "utime");
+        if(!(optProc -> has_c)) printf("%10s", "CMD");
+        if(optProc -> has_s) printf("%10s", "state");
+        if(optProc -> has_S) printf("%10s", "stime");
+        if(optProc -> has_v) printf("%10s", "size");
+        printf("\n\n");
+
+        //output info for all user owned processes
+        for(int i=0; i<optProc -> actualPIDs; i++)
+        {
+            if(optProc -> userOwned[i]){
+                //print process info
+                printf("%3s", GetPID(optProc -> processes[i]));
+                if(!(optProc -> has_U)) printf("%10s", GetUTime(optProc -> processes[i]));
+                if(!(optProc -> has_c)) printf("%10s", GetCMDLine(optProc -> processes[i]));
+                if(optProc -> has_s) printf("%10s", GetState(optProc -> processes[i]));
+                if(optProc -> has_S) printf("%10s", GetSTime(optProc -> processes[i]));
+                if(optProc -> has_v) printf("%10s", GetSize(optProc -> processes[i]));
+                printf("\n");
+            }
+        }
     }
 }

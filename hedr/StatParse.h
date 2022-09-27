@@ -8,6 +8,9 @@
 //fileName will be the stat, statm or cmdline files
 FILE* getFileLineString(char *pPath, char *fileName);
 
+//get's PID of this process
+char* GetPID(char *pPath);
+
 //returns the number from the particular field based on the calling function
 char* GetField(int n, char *x);
 

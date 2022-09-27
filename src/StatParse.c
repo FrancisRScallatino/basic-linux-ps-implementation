@@ -53,6 +53,13 @@ char* GetField(int n, char *x)
     return token;
 }
 
+char* GetPID(char* pPath)
+{
+    char *x = GetFileLineString(pPath, "stat");
+
+    return strtok(x, " ");
+}
+
 char* GetUTime(char *pPath)
 {
     char *x = GetFileLineString(pPath, "stat");

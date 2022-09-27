@@ -4,6 +4,9 @@
  * based on the given options
  */
 
+#ifndef STATPARSE_H
+#define STATPARSE_H
+
 //takes in process path and required file then opens and returns the 1-line string of information from that file
 //fileName will be the stat, statm or cmdline files
 FILE* getFileLineString(char *pPath, char *fileName);
@@ -28,3 +31,5 @@ char* GetSTime(char *pPath);
 
 //return size of virtual memory currently being used by this process
 char* GetSize(char *pPath);
+
+#endif

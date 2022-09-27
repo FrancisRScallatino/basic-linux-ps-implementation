@@ -11,8 +11,7 @@ char* GetFileLineString(char *pPath, char *fileName)
     //build path to needed file without changing original pPath
     strcpy(fPath, pPath);
     strcat(fPath, fileName);
-
-    //printf("stat path: %s\n", fPath);
+    
     FILE *stat = fopen(fPath, "r");
     if(stat == NULL){
         char *errFrom;
@@ -35,20 +34,11 @@ char* GetField(int n, char *x)
 {
     char *null = NULL;
     char *token = strtok_r(x, " ", &null);
-    //printf("\ntoken[0] = %s", token);
 
     //runs loop until it reaches the utime field (field #14)
     for(int i=0; i<n; i++){
         token = strtok_r(NULL, " ", &null);
-        //printf("\ntoken[%d] = %s", i+1, token);
     }
-    
-    /*if((fgetsReturn = fgets(x, n, stat)) == NULL){
-        perror("fgets");
-        exit(EXIT_FAILURE);
-    }*/
-
-    //printf("\nValue at x[1] = %s\n", x);
 
     return token;
 }
@@ -70,8 +60,24 @@ char* GetUTime(char *pPath)
 char* GetCMDLine(char *pPath)
 {
     char *x = GetFileLineString(pPath, "cmdline");
+    char *cmd = strtok(x, " ");
+    
+    FILE *isFile = fopen(cmd, "r");
 
-    return strtok(x, " ");
+    if(!isFile){
+        return cmd;
+    }else{
+        //if it is a file path, get the file name at the end of the path
+        fclose(isFile);
+        char *saveptr = NULL;
+        char *prevToken = malloc(sizeof(char)*64);
+        char *token = strtok_r(cmd, "/", &saveptr);
+        while(token != NULL){
+            strcpy(prevToken, token);
+            token = strtok_r(NULL, "/", &saveptr);
+        }
+        return prevToken;
+    }
 }
 
 char* GetState(char *pPath)

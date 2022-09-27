@@ -35,7 +35,6 @@ int main( int argc, char **argv)
     int maxLenOfPID = 10;
     
     OptProc optProc = Optproc_value(argc, argv, maxLenOfPID, numOfProcesses);
-    OptProc_Print(&optProc);
 
     findProcesses(&optProc);
     

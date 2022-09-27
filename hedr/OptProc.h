@@ -11,7 +11,7 @@ typedef struct OptProc {
     int argc;           //number of arguments used in cammand line
     char **argv;        //the arguments used in the command line
     char **processes;   //matrix to keep track of list of processes in /proc/
-    int *userOwned;     //tracked processes at index i is user owned if !0
+    int *userOwned;     //tracked process at index i is user owned if !0
     int maxPIDs;        //size of space to allocate for processes taken from /proc/
     int actualPIDs;     //real count of the number of processes
     int maxPIDLen;      //size of space to allocate for the length of each PID taken from /proc/
@@ -27,12 +27,11 @@ typedef struct OptProc {
 
 /**
  * initialize option processing struct OptProc
+ * 
+ * allocate char matrix for handling process paths
+ * allocate int array to keep track of USER OWNED processes
+ * record what options are used
  */
 OptProc Optproc_value (int argc, char **argv, int maxPIDLen, int maxPIDs);
-
-/**
- * print argument count and arguments from comand line
- */
-void OptProc_Print(OptProc *self);
 
 #endif

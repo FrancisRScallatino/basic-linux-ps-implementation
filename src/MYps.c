@@ -18,7 +18,7 @@ void printProcessInfo(OptProc *optProc);
 int main( int argc, char **argv)
 {
     //get this process PID
-    int maxNumOfProcesses = 30;
+    int maxNumOfProcesses = 50;
     int maxLenOfPID = 10;
     
     OptProc optProc = Optproc_value(argc, argv, maxLenOfPID, maxNumOfProcesses);

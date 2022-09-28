@@ -4,9 +4,9 @@
 
 char* GetFileLineString(char *pPath, char *fileName)
 {
-    char *fPath = malloc(sizeof(char) * strlen(pPath) + 5); //used to get specific file path for given process
-    char *x = NULL;                                         //string of information from required file
-    size_t n = 0;                                           //buffer size for getline()
+    char *fPath = malloc(sizeof(char) * (strlen(pPath) + strlen(fileName) + 1));    //used to get specific file path for given process
+    char *x = NULL;                                                                 //string of information from required file
+    size_t n = 0;                                                                   //buffer size for getline()
 
     //build path to needed file without changing original pPath
     strcpy(fPath, pPath);

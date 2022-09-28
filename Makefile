@@ -1,6 +1,6 @@
 VPATH = src hedr
 GC = gcc
-WFLAGS = -Wall -Werror
+WFLAGS = -Wall -Werror -Wextra
 
 MYps: src/OptProc.o src/GetProcList.o src/MYps.o src/StatParse.o
 	$(GC) $(WFLAGS) $^ -o MYps
